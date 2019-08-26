@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <div class= "contianer" >
+      <h1>{{ title }}</h1>
+      <hr/>
+      <form class="" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" style="margin-left:100px;margin-top:20px;font-size:20px;" class="btn btn-succes" value="{{ title }}">
+        <h4>You do not member first <a href="{% url 'register' %}">Register</a></h4>
+
+      </form>
+
+    </div>
+  </body>
+</html>

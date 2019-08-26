@@ -1,0 +1,43 @@
+{% extends 'blogapp/base.html' %}
+{% block content %}
+<div class="media content-section">
+    {% for post in post_list %}
+      <article class="jumbotron">
+        <div class="media-body">
+          <div class="article-metadata">
+            <img src="{{post.author.profile.image.url}}" class="img-circle" alt="Cinque Terre" width="50px;" height="50px;">
+            <a class="mr-2" href="#">{{ post.author }}</a><br>
+            <small class="text-muted">{{ post.published_date|date:"F d, Y"}}</small>
+          </div>
+          <legend class="border-bottom mb-4"></legend>
+            <h3>{{ post.title }}</h3>
+            <a href="{% url 'post_detail' pk=post.pk  %}"><button type="button" class="btn btn-info btn-sm">Read More</button></a>
+            <legend class="border-bottom mb-4"></legend>
+            <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approve_comments.count }}</a>
+        </div>
+
+      </article>
+    {% endfor %}
+</div>
+<div class="pagination">
+  {% if is_paginated %}
+    {% if page_obj.has_previous %}
+      <a class="btn btn-default mb-4" href="?page=1">Frist</a>
+      <a class="btn btn-default mb-4" href="?page={{page_obj.previous_page_number}}">Previous</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <a class="btn btn-primary mb-4" href="?page={{ num }}">{{ num }}</a>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'-3' %}
+        <a class="btn btn-primary mb-4" href="?page={{ num }}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <a class="btn btn-default mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+      <a class="btn btn-default mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+  {% endif %}
+
+</div>
+{% endblock %}

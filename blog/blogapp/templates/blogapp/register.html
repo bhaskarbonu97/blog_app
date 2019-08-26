@@ -1,0 +1,24 @@
+{% extends 'blogapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="jumbotron">
+  <form role="form"  method="post">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4"><h2 style="font-family:Cooper;"
+      >Register Form</h2></legend>
+      {{ form|crispy }}
+    </fieldset>
+    <div class="form-group">
+      <button class="btn btn-success" type="submit" name="button">Sign Up</button>
+    </div>
+  </form>
+  <div class="border-top pt-3">
+    <legend class="border-top mb-4">
+   </legend>
+   <small class="text-muted">
+    <h4> Already Have An Accounts ?<a href="{% url 'login' %}">Sign In</a></h4></small>
+  </div>
+
+</div>
+{% endblock %}

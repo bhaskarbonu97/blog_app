@@ -1,0 +1,56 @@
+{% extends 'blogapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="jumbotron">
+        <div class="" style="display:inline">
+          <img src="{{post.author.profile.image.url}}" class="img-circle" alt="Cinque Terre" width="50px;" height="50px;">
+          <a class="mr-2" href="#">{{ post.author }}</a><br>
+          <small class="text-muted">{{ post.published_date|date:"F d, Y"}}</small>
+        </div>
+        <legend class="border-bottom mb-4"></legend>
+        <h1 class='posttitle loader'>{{ post.title }}</h1>
+        <img src="{{ post.image.url }}" alt="" width="500" height="300" class="img-responsive" id="dd">
+        {% if post.published_date %}
+            <div class="date postdate">
+                {{ post.published_date }}
+            </div>
+        {% else %}
+            <a class="btn btn-success" href="{% url 'post_publish' pk=post.pk %}">Publish</a><br>
+            <br>
+            <a class="btn btn-primary" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            <a class="btn btn-primary" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+
+        {% endif %}
+<div>
+      <img src="{{ user.post.image.url }}" alt="" width="600px;" height="500px;">
+      <p class='postcontent' >{{ post.text|safe|linebreaksbr }}</p>
+
+</div>
+      {% if post.author.is_authenticated %}
+
+      {% endif %}
+  <hr>
+  <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+  <div class="container">
+</div>
+
+  {% for comment in post.comments.all %}
+  <br>
+
+      {% if user.is_authenticated or comment.approved_comment %}
+
+              {% if not comment.approved_comment %}
+                  <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+                  <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+              {% endif %}
+              <legend class="border-bottom mb-4" ></legend>
+              <p>-{{ comment.author }}<strong></strong></p>
+              <p>{{ comment.text|safe|linebreaks }}</p>
+
+
+      {% endif %}
+  {% empty %}
+      <p>No comments posted.</p>
+  {% endfor %}
+</div>
+{% endblock %}

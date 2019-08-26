@@ -1,0 +1,34 @@
+{% extends "blogapp/base.html" %}
+{% load staticfiles %}
+{% block content %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'blogapp/style3.css' %}"/>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <div class="background_image">
+          <img src="{{user.profile.coverphoto.url}}" >
+
+        </div>
+        <div class="image_profile">
+          <img src="{{user.profile.image.url}}" class="img-circle" alt="Cinque Terre">
+        </div>
+
+        <div class="content">
+          <h3>UserName: {{user.username}}</h3>
+          <h3>Name: {{user.first_name}} {{user.last_name}}</h3>
+          <h3>Bio :{{user.profile.bio}}</h3>
+          <h3>Email: {{user.email}}</h3>
+          <h3>Phone:{{user.profile.phone}}</h3>
+          <h3>Birthdate:{{user.profile.birthdate}}</h3>
+        </div>
+        <a href="{% url 'ProfileU' %}"><button type="button" class="btn btn-info btn-lg">Profile Update</button></a>
+      </div>
+    </div>
+  </body>
+</html>
+{% endblock %}
